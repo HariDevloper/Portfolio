@@ -5,8 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "tsx server/index.ts",
-    "build": "tsx script/build.ts",
-    "start": "node dist/index.cjs",
+    "build": "vite build",
     "check": "tsc"
   },
   "dependencies": {
