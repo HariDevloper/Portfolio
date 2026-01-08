@@ -1,4 +1,4 @@
-# 🏗️ Industrial Portfolio Website
+#  Portfolio Website
 
 > A modern, industrial-themed portfolio website built with React, Node.js, and TypeScript. Features a cyberpunk aesthetic, 3D visualizations, and a secure contact system.
 
