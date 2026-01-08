@@ -48,15 +48,21 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
 
         <div className="flex items-center gap-3 mt-auto pt-4 border-t border-border/50">
           {/* GitHub Icon Button */}
-          <a
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-9 h-9 flex items-center justify-center border border-border hover:border-primary hover:bg-primary/10 transition-all group"
-            title="View on GitHub"
-          >
-            <Github className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
-          </a>
+          {project.githubLink ? (
+            <a
+              href={project.githubLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 flex items-center justify-center border border-border hover:border-primary hover:bg-primary/10 transition-all group"
+              title="View on GitHub"
+            >
+              <Github className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+            </a>
+          ) : (
+            <div className="w-9 h-9 flex items-center justify-center border border-border/50 opacity-50 cursor-not-allowed" title="Source code not available">
+              <Github className="w-4 h-4 text-muted-foreground/50" />
+            </div>
+          )}
 
           {/* Live Demo Icon Button */}
           {project.link ? (

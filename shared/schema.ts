@@ -31,6 +31,7 @@ export interface Project {
   description: string;
   techStack: string;
   link?: string | null;
+  githubLink?: string | null;
 }
 
 export interface ContactMessage {
@@ -71,6 +72,7 @@ export const projectSchema = z.object({
   description: z.string(),
   techStack: z.string(),
   link: z.string().nullable().optional(),
+  githubLink: z.string().nullable().optional(),
 });
 
 export const insertProfileSchema = profileSchema.omit({ id: true });
