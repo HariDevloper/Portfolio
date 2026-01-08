@@ -1,7 +1,7 @@
 import express from "express";
 import { createServer } from "http";
-import { registerRoutes } from "../server/routes.js";
-import { storage } from "../server/storage.js";
+import { registerRoutes } from "../server/routes";
+import { storage } from "../server/storage";
 
 const app = express();
 app.use(express.json());
