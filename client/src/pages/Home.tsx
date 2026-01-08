@@ -80,7 +80,17 @@ export default function Home() {
     );
   }
 
-  if (!profile) return null;
+  if (!profile) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center text-red-500 font-mono">
+        <div className="text-center p-4 border border-red-500 bg-red-500/10 rounded">
+          <h1 className="text-2xl font-bold mb-4">SYSTEM ERROR</h1>
+          <p>Failed to load profile data.</p>
+          <p className="text-sm mt-2 text-muted-foreground">Please check the console for details.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden selection:bg-primary selection:text-background">
