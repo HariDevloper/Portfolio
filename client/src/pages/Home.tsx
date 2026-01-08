@@ -8,9 +8,10 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { SkillCard } from "@/components/SkillCard";
 import { ProjectCard } from "@/components/ProjectCard";
 import { EducationItem } from "@/components/EducationItem";
-import { Loader2, Mail, Github, Linkedin, Terminal, Send, ChevronDown, MapPin, Phone, ArrowUp } from "lucide-react";
+import { Loader2, Mail, Github, Linkedin, Terminal, Send, ChevronDown, MapPin, Phone, ArrowUp, Menu } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { HeroGraphic } from "@/components/HeroGraphic";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader, SheetClose } from "@/components/ui/sheet";
 
 export default function Home() {
   const { data: profile, isLoading: profileLoading, error: profileError } = useProfile();
@@ -108,17 +109,57 @@ export default function Home() {
       {/* CRT Scanline Effect */}
       <div className="fixed inset-0 pointer-events-none z-40 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] bg-repeat opacity-20" />
 
-      {/* Navigation - Simple Floating */}
-      <nav className="fixed top-6 right-6 z-50 hidden md:flex gap-6 px-6 py-3 bg-background/80 backdrop-blur-md border border-border rounded-full shadow-lg">
-        {["home", "about", "skills", "projects", "contact"].map((item) => (
-          <a
-            key={item}
-            href={`#${item}`}
-            className="text-sm font-mono uppercase tracking-wider hover:text-primary transition-colors"
-          >
-            {item}
-          </a>
-        ))}
+      {/* Navigation - Floating */}
+      <nav className="fixed top-6 right-6 z-50 flex gap-4 items-center">
+        {/* Desktop Nav */}
+        <div className="hidden md:flex gap-6 px-6 py-3 bg-background/80 backdrop-blur-md border border-border rounded-full shadow-lg">
+          {["home", "about", "skills", "projects", "contact"].map((item) => (
+            <a
+              key={item}
+              href={`#${item}`}
+              className="text-sm font-mono uppercase tracking-wider hover:text-primary transition-colors"
+            >
+              {item}
+            </a>
+          ))}
+        </div>
+
+        {/* Mobile Nav */}
+        <div className="md:hidden">
+          <Sheet>
+            <SheetTrigger asChild>
+              <button className="w-12 h-12 bg-background/80 backdrop-blur-md border border-border rounded-full flex items-center justify-center text-primary shadow-lg hover:border-primary transition-colors">
+                <Menu className="w-6 h-6" />
+              </button>
+            </SheetTrigger>
+            <SheetContent side="right" className="bg-background/95 backdrop-blur-xl border-l border-border w-[280px] p-8">
+              <SheetHeader className="mb-8">
+                <SheetTitle className="text-left font-mono text-primary tracking-tighter">NAVIGATION_SYSTEM</SheetTitle>
+              </SheetHeader>
+              <div className="flex flex-col gap-8">
+                {["home", "about", "skills", "projects", "contact"].map((item) => (
+                  <SheetClose asChild key={item}>
+                    <a
+                      href={`#${item}`}
+                      className="text-2xl font-bold font-mono uppercase tracking-tighter hover:text-primary transition-colors"
+                    >
+                      <span className="text-primary/30 mr-2">//</span>
+                      {item}
+                    </a>
+                  </SheetClose>
+                ))}
+              </div>
+
+              <div className="absolute bottom-8 left-8 right-8">
+                <div className="h-[1px] bg-border mb-6" />
+                <div className="flex gap-4 text-muted-foreground">
+                  <a href="#" className="hover:text-primary transition-colors"><Github className="w-5 h-5" /></a>
+                  <a href="#" className="hover:text-primary transition-colors"><Linkedin className="w-5 h-5" /></a>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
       </nav>
 
       {/* HERO SECTION */}
