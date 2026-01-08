@@ -33,42 +33,79 @@ export class JsonStorage implements IStorage {
 
   constructor() {
     this.dataPath = path.join(process.cwd(), 'data.json');
-    // On Vercel, if process.cwd() is not where data.json is, try finding it relative to __dirname
-    if (!fs.existsSync(this.dataPath)) {
-      this.dataPath = path.join(process.cwd(), 'api', 'data.json');
-    }
-    if (!fs.existsSync(this.dataPath) && process.env.VERCEL) {
-      // Fallback for Vercel: sometimes files are in the root
-      this.dataPath = path.join(process.cwd(), 'data.json');
-    }
-
     this.data = this.loadData();
   }
 
   private loadData(): JsonData {
-    try {
-      if (fs.existsSync(this.dataPath)) {
-        const fileContent = fs.readFileSync(this.dataPath, 'utf-8');
-        return JSON.parse(fileContent);
-      } else {
-        console.warn(`Warning: data.json not found at ${this.dataPath}. Initializing with empty data.`);
-        // Try to look in one more place relative to the current file location
-        const backupPath = path.resolve(__dirname, '..', 'data.json');
-        if (fs.existsSync(backupPath)) {
-          console.log(`Found data.json at backup path: ${backupPath}`);
-          return JSON.parse(fs.readFileSync(backupPath, 'utf-8'));
+    // Default hardcoded data to ensure Vercel always has content
+    const defaultData: JsonData = {
+      education: [
+        {
+          id: 1,
+          degree: "B.Tech. Artificial Intelligence and Data Science",
+          school: "Sir Issac Newton College of Engineering and Technology",
+          location: "Nagapattinam, Tamilnadu, India",
+          year: "2022-2026"
+        },
+        {
+          id: 2,
+          degree: "Higher Secondary Education",
+          school: "Government Higher Secondary School, Pudur",
+          location: "Thiruvarur, Tamilnadu, India",
+          year: "2020-2022"
         }
+      ],
+      skills: [
+        { id: 1, category: "Programming Languages", items: "Python, Java, SQL, C" },
+        { id: 2, category: "Operating Systems", items: "Linux OS, Windows OS" },
+        { id: 3, category: "Frameworks & Tools", items: "Flask, Streamlit, Git, Jupyter Notebook, Postgresql, Firebase, Spring Boot, Jhipster, React, MongoDB, Flutter Development" },
+        { id: 4, category: "SEO & Analytics", items: "Google Analytics, Screaming Frog, Semrush" },
+        { id: 5, category: "Data Visualization", items: "Power BI, Matplotlib, Seaborn, Excel, Numpy, Pandas" },
+        { id: 6, category: "AI Tools", items: "Copilot, Cursor, Windsurf, Google Anti-Gravity" },
+        { id: 7, category: "Methodologies", items: "SDLC, OOP, Data Structures & Algorithms" }
+      ],
+      projects: [
+        {
+          id: 1,
+          title: "Portfolio Website",
+          description: "A modern, industrial-themed portfolio website built with React and Node.js.",
+          techStack: "React, Node.js, Tailwind CSS, Postgres",
+          link: "https://github.com/Harikrishnan10125"
+        },
+        {
+          id: 2,
+          title: "AI Analysis Tool",
+          description: "Data analysis tool using Python and Pandas for processing large datasets.",
+          techStack: "Python, Pandas, Matplotlib",
+          link: "#"
+        }
+      ],
+      contactMessages: [],
+      profile: {
+        id: 1,
+        name: "HariKrishnan",
+        title: "Aspiring Developer",
+        summary: "Motivated and adaptable aspiring engineer seeking opportunities in development and analysis. Experienced in building practical solutions across software, web, and data workflows, with a strong focus on clean execution, problem-solving, and continuous learning. Eager to contribute to real-world projects and support team objectives through a proactive and detail-driven approach.",
+        email: "Harikrishnan10125@gmail.com",
+        phone: "+91 9597937366",
+        location: "Thiruvarur, Tamilnadu, India"
       }
-    } catch (error) {
-      console.error('Error loading data.json:', error);
+    };
+
+    // Try to load from file for local development persistence
+    // On Vercel, we prefer the hardcoded data to guarantee stability
+    if (!process.env.VERCEL) {
+      try {
+        if (fs.existsSync(this.dataPath)) {
+          const fileContent = fs.readFileSync(this.dataPath, 'utf-8');
+          return JSON.parse(fileContent);
+        }
+      } catch (error) {
+        console.error('Error loading data.json:', error);
+      }
     }
 
-    return {
-      education: [],
-      skills: [],
-      projects: [],
-      contactMessages: []
-    };
+    return defaultData;
   }
 
   private saveData(): void {
