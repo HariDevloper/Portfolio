@@ -3,7 +3,7 @@ import path from 'path';
 import {
   type Profile, type Education, type Skill, type Project,
   type InsertContactMessage
-} from "@shared/schema";
+} from "../shared/schema";
 
 export interface IStorage {
   getProfile(): Promise<Profile | undefined>;
@@ -110,7 +110,9 @@ export class JsonStorage implements IStorage {
 
   private saveData(): void {
     try {
-      fs.writeFileSync(this.dataPath, JSON.stringify(this.data, null, 2), 'utf-8');
+      if (!process.env.VERCEL) {
+        fs.writeFileSync(this.dataPath, JSON.stringify(this.data, null, 2), 'utf-8');
+      }
     } catch (error) {
       console.error('Error saving data.json:', error);
     }
