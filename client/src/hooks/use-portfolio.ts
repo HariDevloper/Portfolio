@@ -7,7 +7,7 @@ export function useProfile() {
     queryKey: [api.profile.get.path],
     queryFn: async () => {
       const res = await fetch(api.profile.get.path);
-      if (!res.ok) throw new Error("Failed to fetch profile");
+      if (!res.ok) throw new Error(`Failed to fetch profile: ${res.status} ${res.statusText}`);
       return api.profile.get.responses[200].parse(await res.json());
     },
   });
@@ -19,7 +19,7 @@ export function useSkills() {
     queryKey: [api.skills.list.path],
     queryFn: async () => {
       const res = await fetch(api.skills.list.path);
-      if (!res.ok) throw new Error("Failed to fetch skills");
+      if (!res.ok) throw new Error(`Failed to fetch skills: ${res.status} ${res.statusText}`);
       return api.skills.list.responses[200].parse(await res.json());
     },
   });
@@ -31,7 +31,7 @@ export function useEducation() {
     queryKey: [api.education.list.path],
     queryFn: async () => {
       const res = await fetch(api.education.list.path);
-      if (!res.ok) throw new Error("Failed to fetch education");
+      if (!res.ok) throw new Error(`Failed to fetch education: ${res.status} ${res.statusText}`);
       return api.education.list.responses[200].parse(await res.json());
     },
   });
@@ -43,7 +43,7 @@ export function useProjects() {
     queryKey: [api.projects.list.path],
     queryFn: async () => {
       const res = await fetch(api.projects.list.path);
-      if (!res.ok) throw new Error("Failed to fetch projects");
+      if (!res.ok) throw new Error(`Failed to fetch projects: ${res.status} ${res.statusText}`);
       return api.projects.list.responses[200].parse(await res.json());
     },
   });
@@ -58,7 +58,7 @@ export function useContactMutation() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      
+
       if (!res.ok) {
         if (res.status === 400) {
           const error = api.contact.create.responses[400].parse(await res.json());
@@ -66,7 +66,7 @@ export function useContactMutation() {
         }
         throw new Error("Failed to send message");
       }
-      
+
       return api.contact.create.responses[201].parse(await res.json());
     },
   });

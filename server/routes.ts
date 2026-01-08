@@ -34,13 +34,15 @@ export async function registerRoutes(
   // Setup nodemailer transporter
   // Note: We use environment variables for security. 
   // If not set, it will log a warning but won't crash, allowing the app to run without email for development.
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_APP_PASSWORD,
-    },
-  });
+  const transporter = (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD)
+    ? nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_APP_PASSWORD,
+      },
+    })
+    : null;
 
   app.post(api.contact.create.path, async (req, res) => {
     try {
@@ -48,7 +50,7 @@ export async function registerRoutes(
       await storage.createContactMessage(input);
 
       // Email sending logic
-      if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
+      if (transporter && process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
         try {
           await transporter.sendMail({
             from: process.env.GMAIL_USER,
