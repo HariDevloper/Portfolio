@@ -193,7 +193,7 @@ export default function Home() {
       </section >
 
       {/* ABOUT SECTION */}
-      < section id="about" className="py-24 border-t border-border/30 bg-secondary/5" >
+      <section id="about" className="py-16 md:py-24 border-t border-border/30 bg-secondary/5">
         <div className="container max-w-6xl mx-auto px-4">
           <SectionHeading title="System Overview" subtitle="Profile Summary" />
 
@@ -236,7 +236,7 @@ export default function Home() {
       </section >
 
       {/* SKILLS SECTION */}
-      < section id="skills" className="py-24 bg-background" >
+      <section id="skills" className="py-16 md:py-24 bg-background">
         <div className="container max-w-6xl mx-auto px-4">
           <SectionHeading title="Capabilities" subtitle="Technical Proficiency" align="right" />
 
@@ -254,7 +254,7 @@ export default function Home() {
       </section >
 
       {/* EDUCATION SECTION */}
-      < section className="py-24 border-y border-border/30 bg-secondary/5" >
+      <section className="py-16 md:py-24 border-y border-border/30 bg-secondary/5">
         <div className="container max-w-4xl mx-auto px-4">
           <SectionHeading title="Data Logs" subtitle="Education History" align="center" />
 
@@ -267,7 +267,7 @@ export default function Home() {
       </section >
 
       {/* PROJECTS SECTION */}
-      < section id="projects" className="py-24 bg-background" >
+      <section id="projects" className="py-16 md:py-24 bg-background">
         <div className="container max-w-6xl mx-auto px-4">
           <SectionHeading title="Executables" subtitle="Selected Projects" />
 
@@ -280,11 +280,11 @@ export default function Home() {
       </section >
 
       {/* CONTACT SECTION */}
-      < section id="contact" className="py-24 bg-secondary/10 border-t border-border" >
+      <section id="contact" className="py-16 md:py-24 bg-secondary/10 border-t border-border">
         <div className="container max-w-4xl mx-auto px-4">
           <SectionHeading title="Transmission" subtitle="Initiate Contact" align="center" />
 
-          <div className="grid md:grid-cols-2 gap-12 mt-12 bg-card border border-border p-8 md:p-12 relative overflow-hidden">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 mt-8 md:mt-12 bg-card border border-border p-5 sm:p-10 md:p-12 relative overflow-hidden">
             {/* Decorative Background grid */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
 
@@ -294,45 +294,45 @@ export default function Home() {
                 Available for development opportunities and technical consultation. Awaiting input.
               </p>
 
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div className="flex items-center gap-4 group">
-                  <div className="w-10 h-10 rounded-none border border-primary/30 flex items-center justify-center bg-primary/5 group-hover:bg-primary group-hover:text-background transition-colors">
+                  <div className="w-10 h-10 shrink-0 rounded-none border border-primary/30 flex items-center justify-center bg-primary/5 group-hover:bg-primary group-hover:text-background transition-colors">
                     <Mail className="w-5 h-5" />
                   </div>
-                  <div>
-                    <div className="text-xs font-mono text-muted-foreground uppercase">Email</div>
-                    <a href={`mailto:${profile.email}`} className="font-mono text-white hover:text-primary transition-colors">{profile.email}</a>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-[10px] md:text-xs font-mono text-muted-foreground uppercase">Email</div>
+                    <a href={`mailto:${profile.email}`} className="font-mono text-sm md:text-base text-white hover:text-primary transition-colors break-all block">{profile.email}</a>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-4 group">
-                  <div className="w-10 h-10 rounded-none border border-primary/30 flex items-center justify-center bg-primary/5 group-hover:bg-primary group-hover:text-background transition-colors">
+                  <div className="w-10 h-10 shrink-0 rounded-none border border-primary/30 flex items-center justify-center bg-primary/5 group-hover:bg-primary group-hover:text-background transition-colors">
                     <Phone className="w-5 h-5" />
                   </div>
-                  <div>
-                    <div className="text-xs font-mono text-muted-foreground uppercase">Phone</div>
-                    <div className="text-white">{profile.phone}</div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-[10px] md:text-xs font-mono text-muted-foreground uppercase">Phone</div>
+                    <div className="text-sm md:text-base text-white truncate">{profile.phone}</div>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-4 group">
-                  <div className="w-10 h-10 rounded-none border border-primary/30 flex items-center justify-center bg-primary/5 group-hover:bg-primary group-hover:text-background transition-colors">
+                  <div className="w-10 h-10 shrink-0 rounded-none border border-primary/30 flex items-center justify-center bg-primary/5 group-hover:bg-primary group-hover:text-background transition-colors">
                     <MapPin className="w-5 h-5" />
                   </div>
-                  <div>
-                    <div className="text-xs font-mono text-muted-foreground uppercase">Base</div>
-                    <div className="font-mono text-white">{profile.location}</div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-[10px] md:text-xs font-mono text-muted-foreground uppercase">Base</div>
+                    <div className="font-mono text-sm md:text-base text-white">{profile.location}</div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 relative z-10">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 md:space-y-6 relative z-10">
               <div>
                 <input
                   {...form.register("name")}
                   placeholder="IDENTIFIER / NAME"
-                  className="w-full bg-background/50 border border-border px-4 py-3 text-white placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
+                  className="w-full bg-background/50 border border-border px-4 py-3 md:py-4 text-white placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                 />
                 {form.formState.errors.name && (
                   <span className="text-xs text-red-500 mt-1 block">{form.formState.errors.name.message}</span>
@@ -343,7 +343,7 @@ export default function Home() {
                 <input
                   {...form.register("email")}
                   placeholder="RETURN ADDRESS / EMAIL"
-                  className="w-full bg-background/50 border border-border px-4 py-3 text-white placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
+                  className="w-full bg-background/50 border border-border px-4 py-3 md:py-4 text-white placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                 />
                 {form.formState.errors.email && (
                   <span className="text-xs text-red-500 mt-1 block">{form.formState.errors.email.message}</span>
@@ -355,7 +355,7 @@ export default function Home() {
                   {...form.register("message")}
                   placeholder="DATA PAYLOAD / MESSAGE"
                   rows={4}
-                  className="w-full bg-background/50 border border-border px-4 py-3 text-white placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary transition-colors font-mono text-sm resize-none"
+                  className="w-full bg-background/50 border border-border px-4 py-3 md:py-4 text-white placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary transition-colors font-mono text-sm resize-none"
                 />
                 {form.formState.errors.message && (
                   <span className="text-xs text-red-500 mt-1 block">{form.formState.errors.message.message}</span>
