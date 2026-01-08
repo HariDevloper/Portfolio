@@ -20,21 +20,16 @@ app.use((req, res, next) => {
 
 const httpServer = createServer(app);
 
-let routesRegistered = false;
+// Initialize routes immediately
+registerRoutes(httpServer, app).catch(err => {
+    console.error("Critical: Failed to register routes:", err);
+});
 
-export default async function handler(req: any, res: any) {
+export default function handler(req: any, res: any) {
     try {
-        if (!routesRegistered) {
-            await registerRoutes(httpServer, app);
-            routesRegistered = true;
-        }
         return app(req, res);
     } catch (err: any) {
-        console.error("Vercel Function Error:", err);
-        res.status(500).json({
-            message: "Internal Server Error",
-            error: err.message,
-            stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
-        });
+        console.error("Vercel Function Panic:", err);
+        res.status(500).send(`Server Panic: ${err.message}`);
     }
 }
