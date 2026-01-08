@@ -154,8 +154,10 @@ export async function registerRoutes(
     }
   });
 
-  // Seed data
-  await seedDatabase();
+  // Seed data (skip on Vercel as it's read-only)
+  if (!process.env.VERCEL) {
+    await seedDatabase();
+  }
 
   return httpServer;
 }
