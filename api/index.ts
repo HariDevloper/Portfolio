@@ -1,6 +1,5 @@
 import express from "express";
 import { registerRoutes } from "../server/routes";
-import { createServer } from "http";
 
 const app = express();
 app.use(express.json());
@@ -17,16 +16,10 @@ app.use((req, res, next) => {
     next();
 });
 
-const httpServer = createServer(app);
-
-// Simple diagnostic route
-app.get("/api/health", (req, res) => {
-    res.json({ status: "ok", message: "API is alive" });
-});
-
-// Register all your portfolio routes
-registerRoutes(httpServer, app).catch(err => {
-    console.error("Route Registration Failed:", err);
+// Register routes directly to the app
+// Note: We pass a mock object for httpServer since registerRoutes expects it but doesn't strictly need it for API logic
+registerRoutes({} as any, app).catch(err => {
+    console.error("Vercel API Init Error:", err);
 });
 
 export default app;
