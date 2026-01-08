@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { insertContactSchema, profile, education, skills, projects } from './schema';
+import { insertContactSchema, profileSchema, educationSchema, skillSchema, projectSchema } from './schema';
 
 export { insertContactSchema } from './schema';
 export type { InsertContactMessage } from './schema';
@@ -23,7 +23,7 @@ export const api = {
       method: 'GET' as const,
       path: '/api/profile',
       responses: {
-        200: z.custom<typeof profile.$inferSelect>(),
+        200: profileSchema,
         404: errorSchemas.notFound,
       },
     },
@@ -33,7 +33,7 @@ export const api = {
       method: 'GET' as const,
       path: '/api/education',
       responses: {
-        200: z.array(z.custom<typeof education.$inferSelect>()),
+        200: z.array(educationSchema),
       },
     },
   },
@@ -42,7 +42,7 @@ export const api = {
       method: 'GET' as const,
       path: '/api/skills',
       responses: {
-        200: z.array(z.custom<typeof skills.$inferSelect>()),
+        200: z.array(skillSchema),
       },
     },
   },
@@ -51,7 +51,7 @@ export const api = {
       method: 'GET' as const,
       path: '/api/projects',
       responses: {
-        200: z.array(z.custom<typeof projects.$inferSelect>()),
+        200: z.array(projectSchema),
       },
     },
   },

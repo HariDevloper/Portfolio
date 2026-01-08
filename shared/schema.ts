@@ -40,8 +40,9 @@ export interface ContactMessage {
   message: string;
 }
 
-// Zod schemas for validation
-export const insertProfileSchema = z.object({
+// Zod schemas for validation and API responses
+export const profileSchema = z.object({
+  id: z.number(),
   name: z.string(),
   title: z.string(),
   summary: z.string(),
@@ -50,24 +51,32 @@ export const insertProfileSchema = z.object({
   location: z.string(),
 });
 
-export const insertEducationSchema = z.object({
+export const educationSchema = z.object({
+  id: z.number(),
   degree: z.string(),
   school: z.string(),
   location: z.string(),
   year: z.string(),
 });
 
-export const insertSkillSchema = z.object({
+export const skillSchema = z.object({
+  id: z.number(),
   category: z.string(),
   items: z.string(),
 });
 
-export const insertProjectSchema = z.object({
+export const projectSchema = z.object({
+  id: z.number(),
   title: z.string(),
   description: z.string(),
   techStack: z.string(),
-  link: z.string().optional(),
+  link: z.string().nullable().optional(),
 });
+
+export const insertProfileSchema = profileSchema.omit({ id: true });
+export const insertEducationSchema = educationSchema.omit({ id: true });
+export const insertSkillSchema = skillSchema.omit({ id: true });
+export const insertProjectSchema = projectSchema.omit({ id: true });
 
 export const insertContactSchema = z.object({
   name: z.string(),
