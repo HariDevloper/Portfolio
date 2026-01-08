@@ -1,7 +1,6 @@
 import express from "express";
-import { createServer } from "http";
 import { registerRoutes } from "../server/routes";
-import { storage } from "../server/storage";
+import { createServer } from "http";
 
 const app = express();
 app.use(express.json());
@@ -20,16 +19,14 @@ app.use((req, res, next) => {
 
 const httpServer = createServer(app);
 
-// Initialize routes immediately
-registerRoutes(httpServer, app).catch(err => {
-    console.error("Critical: Failed to register routes:", err);
+// Simple diagnostic route
+app.get("/api/health", (req, res) => {
+    res.json({ status: "ok", message: "API is alive" });
 });
 
-export default function handler(req: any, res: any) {
-    try {
-        return app(req, res);
-    } catch (err: any) {
-        console.error("Vercel Function Panic:", err);
-        res.status(500).send(`Server Panic: ${err.message}`);
-    }
-}
+// Register all your portfolio routes
+registerRoutes(httpServer, app).catch(err => {
+    console.error("Route Registration Failed:", err);
+});
+
+export default app;
