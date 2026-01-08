@@ -1,61 +1,83 @@
-import { pgTable, text, serial, integer, boolean } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const profile = pgTable("profile", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  title: text("title").notNull(),
-  summary: text("summary").notNull(),
-  email: text("email").notNull(),
-  phone: text("phone").notNull(),
-  location: text("location").notNull(),
+// Type definitions
+export interface Profile {
+  id: number;
+  name: string;
+  title: string;
+  summary: string;
+  email: string;
+  phone: string;
+  location: string;
+}
+
+export interface Education {
+  id: number;
+  degree: string;
+  school: string;
+  location: string;
+  year: string;
+}
+
+export interface Skill {
+  id: number;
+  category: string;
+  items: string;
+}
+
+export interface Project {
+  id: number;
+  title: string;
+  description: string;
+  techStack: string;
+  link?: string | null;
+}
+
+export interface ContactMessage {
+  id: number;
+  name: string;
+  email: string;
+  message: string;
+}
+
+// Zod schemas for validation
+export const insertProfileSchema = z.object({
+  name: z.string(),
+  title: z.string(),
+  summary: z.string(),
+  email: z.string().email(),
+  phone: z.string(),
+  location: z.string(),
 });
 
-export const education = pgTable("education", {
-  id: serial("id").primaryKey(),
-  degree: text("degree").notNull(),
-  school: text("school").notNull(),
-  location: text("location").notNull(),
-  year: text("year").notNull(),
+export const insertEducationSchema = z.object({
+  degree: z.string(),
+  school: z.string(),
+  location: z.string(),
+  year: z.string(),
 });
 
-export const skills = pgTable("skills", {
-  id: serial("id").primaryKey(),
-  category: text("category").notNull(), // e.g., "Programming Languages", "Frameworks"
-  items: text("items").notNull(), // Comma separated list
+export const insertSkillSchema = z.object({
+  category: z.string(),
+  items: z.string(),
 });
 
-export const projects = pgTable("projects", {
-  id: serial("id").primaryKey(),
-  title: text("title").notNull(),
-  description: text("description").notNull(),
-  techStack: text("tech_stack").notNull(),
-  link: text("link"),
+export const insertProjectSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  techStack: z.string(),
+  link: z.string().optional(),
 });
 
-export const contact_messages = pgTable("contact_messages", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  email: text("email").notNull(),
-  message: text("message").notNull(),
+export const insertContactSchema = z.object({
+  name: z.string(),
+  email: z.string().email(),
+  message: z.string(),
 });
 
-// Schemas
-export const insertProfileSchema = createInsertSchema(profile).omit({ id: true });
-export const insertEducationSchema = createInsertSchema(education).omit({ id: true });
-export const insertSkillSchema = createInsertSchema(skills).omit({ id: true });
-export const insertProjectSchema = createInsertSchema(projects).omit({ id: true });
-export const insertContactSchema = createInsertSchema(contact_messages).omit({ id: true });
-
-// Types
-export type Profile = typeof profile.$inferSelect;
+// Insert types
 export type InsertProfile = z.infer<typeof insertProfileSchema>;
-export type Education = typeof education.$inferSelect;
 export type InsertEducation = z.infer<typeof insertEducationSchema>;
-export type Skill = typeof skills.$inferSelect;
 export type InsertSkill = z.infer<typeof insertSkillSchema>;
-export type Project = typeof projects.$inferSelect;
 export type InsertProject = z.infer<typeof insertProjectSchema>;
-export type ContactMessage = typeof contact_messages.$inferSelect;
 export type InsertContactMessage = z.infer<typeof insertContactSchema>;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,18 +8,19 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { SkillCard } from "@/components/SkillCard";
 import { ProjectCard } from "@/components/ProjectCard";
 import { EducationItem } from "@/components/EducationItem";
-import { Loader2, Mail, Github, Linkedin, Terminal, Send, ChevronDown, MapPin, Phone } from "lucide-react";
+import { Loader2, Mail, Github, Linkedin, Terminal, Send, ChevronDown, MapPin, Phone, ArrowUp } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { HeroGraphic } from "@/components/HeroGraphic";
 
 export default function Home() {
   const { data: profile, isLoading: profileLoading } = useProfile();
   const { data: skills, isLoading: skillsLoading } = useSkills();
   const { data: education, isLoading: eduLoading } = useEducation();
   const { data: projects, isLoading: projectsLoading } = useProjects();
-  
+
   const { toast } = useToast();
   const contactMutation = useContactMutation();
-  
+
   const form = useForm<InsertContactMessage>({
     resolver: zodResolver(insertContactSchema),
     defaultValues: {
@@ -33,8 +34,9 @@ export default function Home() {
     contactMutation.mutate(data, {
       onSuccess: () => {
         toast({
-          title: "Message Transmitted",
-          description: "Your communication has been received successfully.",
+          title: "TRANSMISSION ESTABLISHED",
+          description: "Login credentials verified. Payload delivered to secure server.",
+          className: "bg-black border-2 border-primary text-primary font-mono shadow-[0_0_20px_rgba(0,243,255,0.3)]",
         });
         form.reset();
       },
@@ -50,6 +52,22 @@ export default function Home() {
 
   const { scrollYProgress } = useScroll();
   const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
+  // Scroll to top button state
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 400);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   if (profileLoading || skillsLoading || eduLoading || projectsLoading) {
     return (
@@ -67,20 +85,20 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden selection:bg-primary selection:text-background">
       {/* Progress Bar */}
-      <motion.div 
+      <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-primary z-50 origin-left"
         style={{ scaleX }}
       />
-      
+
       {/* CRT Scanline Effect */}
       <div className="fixed inset-0 pointer-events-none z-40 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] bg-repeat opacity-20" />
 
       {/* Navigation - Simple Floating */}
       <nav className="fixed top-6 right-6 z-50 hidden md:flex gap-6 px-6 py-3 bg-background/80 backdrop-blur-md border border-border rounded-full shadow-lg">
-        {["about", "skills", "projects", "contact"].map((item) => (
-          <a 
+        {["home", "about", "skills", "projects", "contact"].map((item) => (
+          <a
             key={item}
-            href={`#${item}`} 
+            href={`#${item}`}
             className="text-sm font-mono uppercase tracking-wider hover:text-primary transition-colors"
           >
             {item}
@@ -89,9 +107,9 @@ export default function Home() {
       </nav>
 
       {/* HERO SECTION */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 pt-20 pb-10">
+      <section id="home" className="relative min-h-screen flex items-center justify-center px-4 pt-20 pb-10">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/5 via-background to-background" />
-        
+
         <div className="container max-w-6xl mx-auto relative z-10 grid md:grid-cols-2 gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -102,28 +120,28 @@ export default function Home() {
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               SYSTEM ONLINE
             </div>
-            
+
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-4 leading-none">
               {profile.name.split(" ")[0]}
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary to-white">
                 {profile.name.split(" ")[1]}
               </span>
             </h1>
-            
-            <p className="text-xl md:text-2xl text-muted-foreground font-light mb-8 max-w-lg">
+
+            <p className="text-xl md:text-2xl text-muted-foreground font-mono font-light mb-8 max-w-lg">
               {profile.title}
             </p>
-            
+
             <div className="flex flex-wrap gap-4">
-              <a 
-                href="#contact" 
+              <a
+                href="#contact"
                 className="px-8 py-3 bg-primary text-background font-bold uppercase tracking-wider hover:bg-white transition-colors duration-300 flex items-center gap-2"
               >
                 <Terminal className="w-4 h-4" />
                 Initialize Contact
               </a>
-              <a 
-                href="#projects" 
+              <a
+                href="#projects"
                 className="px-8 py-3 border border-border bg-background hover:border-primary hover:text-primary transition-colors duration-300 uppercase tracking-wider font-mono text-sm flex items-center justify-center"
               >
                 View Protocols
@@ -143,19 +161,12 @@ export default function Home() {
             transition={{ duration: 1, delay: 0.2 }}
             className="hidden md:block relative"
           >
-            {/* Abstract Tech Graphic */}
-            <div className="relative w-full aspect-square max-w-md mx-auto">
-              <div className="absolute inset-0 border border-primary/20 rounded-full animate-[spin_10s_linear_infinite]" />
-              <div className="absolute inset-4 border border-dashed border-primary/30 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
-              <div className="absolute inset-1/4 bg-primary/5 rounded-full blur-3xl" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                 <div className="text-9xl font-black text-primary/10 select-none">HK</div>
-              </div>
-            </div>
+            <HeroGraphic />
+
           </motion.div>
         </div>
 
-        <motion.a 
+        <motion.a
           href="#about"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, y: [0, 10, 0] }}
@@ -164,42 +175,42 @@ export default function Home() {
         >
           <ChevronDown className="w-8 h-8" />
         </motion.a>
-      </section>
+      </section >
 
       {/* ABOUT SECTION */}
-      <section id="about" className="py-24 border-t border-border/30 bg-secondary/5">
+      < section id="about" className="py-24 border-t border-border/30 bg-secondary/5" >
         <div className="container max-w-6xl mx-auto px-4">
           <SectionHeading title="System Overview" subtitle="Profile Summary" />
-          
+
           <div className="grid md:grid-cols-3 gap-12">
             <div className="md:col-span-2">
               <p className="text-lg leading-relaxed text-muted-foreground mb-8">
                 {profile.summary}
               </p>
-              
+
               <div className="grid sm:grid-cols-2 gap-6">
                 <div className="p-4 bg-background border border-border">
                   <div className="text-primary mb-2"><MapPin className="w-5 h-5" /></div>
                   <div className="font-mono text-sm text-muted-foreground uppercase">Location</div>
-                  <div className="font-bold text-white">{profile.location}</div>
+                  <div className="font-mono font-bold text-white">{profile.location}</div>
                 </div>
                 <div className="p-4 bg-background border border-border">
                   <div className="text-primary mb-2"><Terminal className="w-5 h-5" /></div>
                   <div className="font-mono text-sm text-muted-foreground uppercase">Role</div>
-                  <div className="font-bold text-white">{profile.title}</div>
+                  <div className="font-mono font-bold text-white">{profile.title}</div>
                 </div>
               </div>
             </div>
-            
+
             <div className="relative">
               <div className="absolute -inset-4 border-2 border-primary/20 opacity-50" />
               <div className="bg-background p-6 border border-border h-full flex flex-col justify-center">
-                <div className="font-mono text-xs text-primary mb-4"> // CORE OBJECTIVES</div>
+                <div className="font-mono text-sm text-primary mb-4"> // CORE OBJECTIVES</div>
                 <ul className="space-y-4">
                   {["Clean Execution", "Problem Solving", "Continuous Learning", "Team Objectives"].map((item, i) => (
                     <li key={i} className="flex items-center gap-3">
                       <div className="w-1.5 h-1.5 bg-primary" />
-                      <span className="text-sm font-medium">{item}</span>
+                      <span className="text-sm font-mono font-medium">{item}</span>
                     </li>
                   ))}
                 </ul>
@@ -207,67 +218,67 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* SKILLS SECTION */}
-      <section id="skills" className="py-24 bg-background">
+      < section id="skills" className="py-24 bg-background" >
         <div className="container max-w-6xl mx-auto px-4">
           <SectionHeading title="Capabilities" subtitle="Technical Proficiency" align="right" />
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {skills?.map((skill, index) => (
-              <SkillCard 
-                key={skill.id} 
-                category={skill.category} 
-                items={skill.items} 
-                index={index} 
+              <SkillCard
+                key={skill.id}
+                category={skill.category}
+                items={skill.items}
+                index={index}
               />
             ))}
           </div>
         </div>
-      </section>
+      </section >
 
       {/* EDUCATION SECTION */}
-      <section className="py-24 border-y border-border/30 bg-secondary/5">
+      < section className="py-24 border-y border-border/30 bg-secondary/5" >
         <div className="container max-w-4xl mx-auto px-4">
           <SectionHeading title="Data Logs" subtitle="Education History" align="center" />
-          
+
           <div className="space-y-8 mt-16">
             {education?.map((edu, index) => (
               <EducationItem key={edu.id} education={edu} index={index} />
             ))}
           </div>
         </div>
-      </section>
+      </section >
 
       {/* PROJECTS SECTION */}
-      <section id="projects" className="py-24 bg-background">
+      < section id="projects" className="py-24 bg-background" >
         <div className="container max-w-6xl mx-auto px-4">
           <SectionHeading title="Executables" subtitle="Selected Projects" />
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects?.map((project, index) => (
               <ProjectCard key={project.id} project={project} index={index} />
             ))}
           </div>
         </div>
-      </section>
+      </section >
 
       {/* CONTACT SECTION */}
-      <section id="contact" className="py-24 bg-secondary/10 border-t border-border">
+      < section id="contact" className="py-24 bg-secondary/10 border-t border-border" >
         <div className="container max-w-4xl mx-auto px-4">
           <SectionHeading title="Transmission" subtitle="Initiate Contact" align="center" />
-          
+
           <div className="grid md:grid-cols-2 gap-12 mt-12 bg-card border border-border p-8 md:p-12 relative overflow-hidden">
-             {/* Decorative Background grid */}
-             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
+            {/* Decorative Background grid */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
 
             <div className="relative z-10">
               <h3 className="text-2xl font-bold mb-6 text-white">Direct Line</h3>
               <p className="text-muted-foreground mb-8">
                 Available for development opportunities and technical consultation. Awaiting input.
               </p>
-              
+
               <div className="space-y-6">
                 <div className="flex items-center gap-4 group">
                   <div className="w-10 h-10 rounded-none border border-primary/30 flex items-center justify-center bg-primary/5 group-hover:bg-primary group-hover:text-background transition-colors">
@@ -275,10 +286,10 @@ export default function Home() {
                   </div>
                   <div>
                     <div className="text-xs font-mono text-muted-foreground uppercase">Email</div>
-                    <a href={`mailto:${profile.email}`} className="text-white hover:text-primary transition-colors">{profile.email}</a>
+                    <a href={`mailto:${profile.email}`} className="font-mono text-white hover:text-primary transition-colors">{profile.email}</a>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center gap-4 group">
                   <div className="w-10 h-10 rounded-none border border-primary/30 flex items-center justify-center bg-primary/5 group-hover:bg-primary group-hover:text-background transition-colors">
                     <Phone className="w-5 h-5" />
@@ -295,7 +306,7 @@ export default function Home() {
                   </div>
                   <div>
                     <div className="text-xs font-mono text-muted-foreground uppercase">Base</div>
-                    <div className="text-white">{profile.location}</div>
+                    <div className="font-mono text-white">{profile.location}</div>
                   </div>
                 </div>
               </div>
@@ -312,7 +323,7 @@ export default function Home() {
                   <span className="text-xs text-red-500 mt-1 block">{form.formState.errors.name.message}</span>
                 )}
               </div>
-              
+
               <div>
                 <input
                   {...form.register("email")}
@@ -323,7 +334,7 @@ export default function Home() {
                   <span className="text-xs text-red-500 mt-1 block">{form.formState.errors.email.message}</span>
                 )}
               </div>
-              
+
               <div>
                 <textarea
                   {...form.register("message")}
@@ -335,7 +346,7 @@ export default function Home() {
                   <span className="text-xs text-red-500 mt-1 block">{form.formState.errors.message.message}</span>
                 )}
               </div>
-              
+
               <button
                 type="submit"
                 disabled={contactMutation.isPending}
@@ -353,17 +364,34 @@ export default function Home() {
             </form>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* FOOTER */}
-      <footer className="py-8 border-t border-border bg-background text-center">
+      < footer className="py-8 border-t border-border bg-background text-center" >
         <div className="container mx-auto px-4">
           <div className="font-mono text-xs text-muted-foreground">
             SYSTEM STATUS: OPERATIONAL<br />
             © {new Date().getFullYear()} HARIKRISHNAN. ALL RIGHTS RESERVED.
           </div>
         </div>
-      </footer>
-    </div>
+      </footer >
+
+      {/* Scroll to Top Button */}
+      {
+        showScrollTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0 }}
+            onClick={scrollToTop}
+            className="fixed bottom-8 right-8 z-50 w-12 h-12 bg-primary text-background hover:bg-white hover:text-black transition-colors duration-300 flex items-center justify-center border-2 border-primary shadow-lg group"
+            aria-label="Scroll to top"
+          >
+            <ArrowUp className="w-5 h-5 group-hover:animate-bounce" />
+          </motion.button>
+        )
+      }
+    </div >
   );
 }
+

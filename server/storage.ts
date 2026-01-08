@@ -1,10 +1,9 @@
-import { db } from "./db";
+import fs from 'fs';
+import path from 'path';
 import {
-  profile, education, skills, projects, contact_messages,
   type Profile, type Education, type Skill, type Project,
   type InsertContactMessage
 } from "@shared/schema";
-import { eq } from "drizzle-orm";
 
 export interface IStorage {
   getProfile(): Promise<Profile | undefined>;
@@ -20,40 +19,108 @@ export interface IStorage {
   createProject(data: any): Promise<void>;
 }
 
-export class DatabaseStorage implements IStorage {
+interface JsonData {
+  profile?: Profile;
+  education: Education[];
+  skills: Skill[];
+  projects: Project[];
+  contactMessages: InsertContactMessage[];
+}
+
+export class JsonStorage implements IStorage {
+  private dataPath: string;
+  private data: JsonData;
+
+  constructor() {
+    this.dataPath = path.join(process.cwd(), 'data.json');
+    this.data = this.loadData();
+  }
+
+  private loadData(): JsonData {
+    try {
+      if (fs.existsSync(this.dataPath)) {
+        const fileContent = fs.readFileSync(this.dataPath, 'utf-8');
+        return JSON.parse(fileContent);
+      }
+    } catch (error) {
+      console.error('Error loading data.json:', error);
+    }
+    
+    return {
+      education: [],
+      skills: [],
+      projects: [],
+      contactMessages: []
+    };
+  }
+
+  private saveData(): void {
+    try {
+      fs.writeFileSync(this.dataPath, JSON.stringify(this.data, null, 2), 'utf-8');
+    } catch (error) {
+      console.error('Error saving data.json:', error);
+    }
+  }
+
   async getProfile(): Promise<Profile | undefined> {
-    const [data] = await db.select().from(profile);
-    return data;
+    return this.data.profile;
   }
 
   async getEducation(): Promise<Education[]> {
-    return await db.select().from(education);
+    return this.data.education;
   }
 
   async getSkills(): Promise<Skill[]> {
-    return await db.select().from(skills);
+    return this.data.skills;
   }
 
   async getProjects(): Promise<Project[]> {
-    return await db.select().from(projects);
+    return this.data.projects;
   }
 
   async createContactMessage(message: InsertContactMessage): Promise<void> {
-    await db.insert(contact_messages).values(message);
+    const newMessage = {
+      id: this.data.contactMessages.length + 1,
+      ...message
+    };
+    this.data.contactMessages.push(newMessage);
+    this.saveData();
   }
 
   async createProfile(data: any): Promise<void> {
-    await db.insert(profile).values(data);
+    this.data.profile = {
+      id: 1,
+      ...data
+    };
+    this.saveData();
   }
+
   async createEducation(data: any): Promise<void> {
-    await db.insert(education).values(data);
+    const newEducation = {
+      id: this.data.education.length + 1,
+      ...data
+    };
+    this.data.education.push(newEducation);
+    this.saveData();
   }
+
   async createSkill(data: any): Promise<void> {
-    await db.insert(skills).values(data);
+    const newSkill = {
+      id: this.data.skills.length + 1,
+      ...data
+    };
+    this.data.skills.push(newSkill);
+    this.saveData();
   }
+
   async createProject(data: any): Promise<void> {
-    await db.insert(projects).values(data);
+    const newProject = {
+      id: this.data.projects.length + 1,
+      ...data
+    };
+    this.data.projects.push(newProject);
+    this.saveData();
   }
 }
 
-export const storage = new DatabaseStorage();
+export const storage = new JsonStorage();

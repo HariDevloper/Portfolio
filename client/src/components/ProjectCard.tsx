@@ -12,7 +12,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
+      viewport={{ once: false }}
       transition={{ delay: index * 0.1 }}
       className="group relative bg-card/50 border border-border overflow-hidden hover:border-primary/50 transition-all duration-300"
     >
@@ -30,7 +30,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
         <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-primary transition-colors">
           {project.title}
         </h3>
-        
+
         <p className="text-muted-foreground mb-6 line-clamp-3 text-sm">
           {project.description}
         </p>
@@ -39,31 +39,41 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
           <div className="text-xs font-mono text-primary/70 mb-2 uppercase tracking-wider">Tech Stack</div>
           <div className="flex flex-wrap gap-2">
             {project.techStack.split(",").map((tech, i) => (
-              <span key={i} className="text-xs px-2 py-0.5 bg-primary/10 text-primary border border-primary/20">
+              <span key={i} className="text-xs font-mono px-2 py-0.5 bg-primary/10 text-primary border border-primary/20">
                 {tech.trim()}
               </span>
             ))}
           </div>
         </div>
 
-        <div className="flex items-center gap-4 mt-auto pt-4 border-t border-border/50">
+        <div className="flex items-center gap-3 mt-auto pt-4 border-t border-border/50">
+          {/* GitHub Icon Button */}
+          <a
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-9 h-9 flex items-center justify-center border border-border hover:border-primary hover:bg-primary/10 transition-all group"
+            title="View on GitHub"
+          >
+            <Github className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+          </a>
+
+          {/* Live Demo Icon Button */}
           {project.link ? (
-            <a 
-              href={project.link} 
-              target="_blank" 
+            <a
+              href={project.link}
+              target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-sm font-medium text-white hover:text-primary transition-colors"
+              className="w-9 h-9 flex items-center justify-center border border-border hover:border-primary hover:bg-primary/10 transition-all group"
+              title="Live Demo"
             >
-              <ExternalLink className="w-4 h-4" />
-              Live Demo
+              <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
             </a>
           ) : (
-            <span className="text-xs text-muted-foreground italic">Internal / No Link</span>
+            <div className="w-9 h-9 flex items-center justify-center border border-border/50 opacity-50 cursor-not-allowed" title="No live demo available">
+              <ExternalLink className="w-4 h-4 text-muted-foreground/50" />
+            </div>
           )}
-          {/* Assuming there might be a repo link or just decorative */}
-          <div className="ml-auto">
-             <Code2 className="w-5 h-5 text-muted-foreground opacity-50" />
-          </div>
         </div>
       </div>
 
