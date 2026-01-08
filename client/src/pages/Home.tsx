@@ -13,10 +13,10 @@ import { useToast } from "@/hooks/use-toast";
 import { HeroGraphic } from "@/components/HeroGraphic";
 
 export default function Home() {
-  const { data: profile, isLoading: profileLoading } = useProfile();
-  const { data: skills, isLoading: skillsLoading } = useSkills();
-  const { data: education, isLoading: eduLoading } = useEducation();
-  const { data: projects, isLoading: projectsLoading } = useProjects();
+  const { data: profile, isLoading: profileLoading, error: profileError } = useProfile();
+  const { data: skills, isLoading: skillsLoading, error: skillsError } = useSkills();
+  const { data: education, isLoading: eduLoading, error: eduError } = useEducation();
+  const { data: projects, isLoading: projectsLoading, error: projectsError } = useProjects();
 
   const { toast } = useToast();
   const contactMutation = useContactMutation();
@@ -80,13 +80,18 @@ export default function Home() {
     );
   }
 
-  if (!profile) {
+  if (profileError || skillsError || eduError || projectsError || !profile) {
+    const errorMessage = (profileError || skillsError || eduError || projectsError)?.message || "Unknown Error";
     return (
       <div className="min-h-screen bg-background flex items-center justify-center text-red-500 font-mono">
-        <div className="text-center p-4 border border-red-500 bg-red-500/10 rounded">
+        <div className="text-center p-4 border border-red-500 bg-red-500/10 rounded max-w-lg">
           <h1 className="text-2xl font-bold mb-4">SYSTEM ERROR</h1>
           <p>Failed to load profile data.</p>
-          <p className="text-sm mt-2 text-muted-foreground">Please check the console for details.</p>
+          <div className="bg-black/50 p-2 mt-4 rounded text-xs text-left overflow-auto max-h-40">
+            <p className="font-bold">Error Details:</p>
+            <pre>{errorMessage}</pre>
+          </div>
+          <p className="text-sm mt-4 text-muted-foreground">Please check the console for details.</p>
         </div>
       </div>
     );
