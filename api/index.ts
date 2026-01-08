@@ -53,28 +53,28 @@ const portfolioData = {
     ],
     projects: [
         {
-            id: 1,
+            id: 3,
             title: "FLOPS Landing Page",
             description: "A professional landing page for FLOPS project with modern UI and smooth animations.",
             techStack: "React, Tailwind CSS, Framer Motion",
             githubLink: "https://github.com/HariDevloper/FLOPS-landingpage",
-            link: "#"
+            link: "https://flops-technologies.vercel.app/"
+        },
+        {
+            id: 1,
+            title: "DrawToGather",
+            description: "A collaborative real-time drawing application for teams and friends.",
+            techStack: "React, Socket.io, Canvas API, Google OAuth, MongoDB",
+            githubLink: "https://github.com/HariDevloper/DrawToGather",
+            link: "https://draw-to-gather-1qii.vercel.app/"
         },
         {
             id: 2,
-            title: "DrawToGather",
-            description: "A collaborative real-time drawing application for teams and friends.",
-            techStack: "React, Socket.io, Canvas API",
-            githubLink: "https://github.com/HariDevloper/DrawToGather",
-            link: "#"
-        },
-        {
-            id: 3,
             title: "SEO Dashboard AI",
             description: "AI-powered SEO dashboard for monitoring and optimizing website performance.",
-            techStack: "React, OpenAI API, Analytics API",
+            techStack: "React, Flask, BeautifulSoup4, TextBlob, TF-IDF, scikit-learn",
             githubLink: "https://github.com/HariDevloper/SEO-Dashboard-AI",
-            link: "#"
+            link: "https://seo-dashboard-ai.vercel.app/"
         }
     ]
 };
