@@ -11,7 +11,7 @@ export interface IStorage {
   getSkills(): Promise<Skill[]>;
   getProjects(): Promise<Project[]>;
   createContactMessage(message: InsertContactMessage): Promise<void>;
-  
+
   // Seed methods
   createProfile(data: any): Promise<void>;
   createEducation(data: any): Promise<void>;
@@ -33,6 +33,15 @@ export class JsonStorage implements IStorage {
 
   constructor() {
     this.dataPath = path.join(process.cwd(), 'data.json');
+    // On Vercel, if process.cwd() is not where data.json is, try finding it relative to __dirname
+    if (!fs.existsSync(this.dataPath)) {
+      this.dataPath = path.join(process.cwd(), 'api', 'data.json');
+    }
+    if (!fs.existsSync(this.dataPath) && process.env.VERCEL) {
+      // Fallback for Vercel: sometimes files are in the root
+      this.dataPath = path.join(process.cwd(), 'data.json');
+    }
+
     this.data = this.loadData();
   }
 
@@ -41,11 +50,19 @@ export class JsonStorage implements IStorage {
       if (fs.existsSync(this.dataPath)) {
         const fileContent = fs.readFileSync(this.dataPath, 'utf-8');
         return JSON.parse(fileContent);
+      } else {
+        console.warn(`Warning: data.json not found at ${this.dataPath}. Initializing with empty data.`);
+        // Try to look in one more place relative to the current file location
+        const backupPath = path.resolve(__dirname, '..', 'data.json');
+        if (fs.existsSync(backupPath)) {
+          console.log(`Found data.json at backup path: ${backupPath}`);
+          return JSON.parse(fs.readFileSync(backupPath, 'utf-8'));
+        }
       }
     } catch (error) {
       console.error('Error loading data.json:', error);
     }
-    
+
     return {
       education: [],
       skills: [],
