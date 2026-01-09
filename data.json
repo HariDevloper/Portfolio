@@ -18,8 +18,8 @@
   "skills": [
     {
       "id": 1,
-      "category": "Programming Languages",
-      "items": "Python, Java, SQL, C"
+      "category": "Programming Languages and Methodologies",
+      "items": "Python, Java, SQL, C, SDLC, OOP, Data Structures & Algorithms"
     },
     {
       "id": 2,
@@ -45,11 +45,6 @@
       "id": 6,
       "category": "AI Tools",
       "items": "Copilot, Cursor, Windsurf, Google Anti-Gravity"
-    },
-    {
-      "id": 7,
-      "category": "Methodologies",
-      "items": "SDLC, OOP, Data Structures & Algorithms"
     }
   ],
   "projects": [
