@@ -423,10 +423,10 @@ export default function Home() {
       </section >
 
       {/* FOOTER */}
-      < footer className="py-8 border-t border-border bg-background text-center" >
+      <footer className="py-8 border-t border-border bg-background text-center" >
         <div className="container mx-auto px-4">
           <div className="font-mono text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Harikrishnan. All Rights Reserved.
+            © {new Date().getFullYear()} HARIKRISHNAN RAMESH. All Rights Reserved.
           </div>
         </div>
       </footer >
