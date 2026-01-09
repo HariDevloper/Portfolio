@@ -12,7 +12,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: false }}
+      viewport={{ once: true }}
       transition={{ delay: index * 0.1 }}
       className="group relative bg-card/50 border border-border overflow-hidden hover:border-primary/50 transition-all duration-300"
     >

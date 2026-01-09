@@ -35,8 +35,8 @@ export default function Home() {
     contactMutation.mutate(data, {
       onSuccess: () => {
         toast({
-          title: "TRANSMISSION ESTABLISHED",
-          description: "Login credentials verified. Payload delivered to secure server.",
+          title: "Message Sent Successfully!",
+          description: "Your message has been received. I'll get back to you soon!",
           className: "bg-black border-2 border-primary text-primary font-mono shadow-[0_0_20px_rgba(0,243,255,0.3)]",
         });
         form.reset();
@@ -75,7 +75,7 @@ export default function Home() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <Loader2 className="w-12 h-12 text-primary animate-spin" />
-          <div className="font-mono text-primary animate-pulse">INITIALIZING SYSTEM...</div>
+          <div className="font-mono text-primary animate-pulse">Loading...</div>
         </div>
       </div>
     );
@@ -86,7 +86,7 @@ export default function Home() {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center text-red-500 font-mono">
         <div className="text-center p-4 border border-red-500 bg-red-500/10 rounded max-w-lg">
-          <h1 className="text-2xl font-bold mb-4">SYSTEM ERROR</h1>
+          <h1 className="text-2xl font-bold mb-4">Error Loading Portfolio</h1>
           <p>Failed to load profile data.</p>
           <div className="bg-black/50 p-2 mt-4 rounded text-xs text-left overflow-auto max-h-40">
             <p className="font-bold">Error Details:</p>
@@ -134,7 +134,7 @@ export default function Home() {
             </SheetTrigger>
             <SheetContent side="right" className="bg-background/95 backdrop-blur-xl border-l border-border w-[280px] p-8">
               <SheetHeader className="mb-8">
-                <SheetTitle className="text-left font-mono text-primary tracking-tighter">NAVIGATION_SYSTEM</SheetTitle>
+                <SheetTitle className="text-left font-mono text-primary tracking-tighter">Menu</SheetTitle>
               </SheetHeader>
               <div className="flex flex-col gap-8">
                 {["home", "about", "skills", "projects", "contact"].map((item) => (
@@ -153,8 +153,8 @@ export default function Home() {
               <div className="absolute bottom-8 left-8 right-8">
                 <div className="h-[1px] bg-border mb-6" />
                 <div className="flex gap-4 text-muted-foreground">
-                  <a href="#" className="hover:text-primary transition-colors"><Github className="w-5 h-5" /></a>
-                  <a href="#" className="hover:text-primary transition-colors"><Linkedin className="w-5 h-5" /></a>
+                  <a href="https://github.com/HariDevloper" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors"><Github className="w-5 h-5" /></a>
+                  <a href="https://www.linkedin.com/in/devhari" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors"><Linkedin className="w-5 h-5" /></a>
                 </div>
               </div>
             </SheetContent>
@@ -174,7 +174,7 @@ export default function Home() {
           >
             <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 border border-primary/30 rounded-full bg-primary/5 text-primary font-mono text-xs md:text-sm">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              SYSTEM ONLINE
+              Available for Work
             </div>
 
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-4 leading-none">
@@ -194,19 +194,19 @@ export default function Home() {
                 className="px-8 py-3 bg-primary text-background font-bold uppercase tracking-wider hover:bg-white transition-colors duration-300 flex items-center gap-2"
               >
                 <Terminal className="w-4 h-4" />
-                Initialize Contact
+                Get In Touch
               </a>
               <a
                 href="#projects"
                 className="px-8 py-3 border border-border bg-background hover:border-primary hover:text-primary transition-colors duration-300 uppercase tracking-wider font-mono text-sm flex items-center justify-center"
               >
-                View Protocols
+                View Projects
               </a>
             </div>
 
             <div className="mt-12 flex gap-6 text-muted-foreground">
-              <a href="#" className="hover:text-primary transition-colors"><Github className="w-6 h-6" /></a>
-              <a href="#" className="hover:text-primary transition-colors"><Linkedin className="w-6 h-6" /></a>
+              <a href="https://github.com/HariDevloper" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors"><Github className="w-6 h-6" /></a>
+              <a href="https://www.linkedin.com/in/devhari" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors"><Linkedin className="w-6 h-6" /></a>
               <a href={`mailto:${profile.email}`} className="hover:text-primary transition-colors"><Mail className="w-6 h-6" /></a>
             </div>
           </motion.div>
@@ -236,7 +236,7 @@ export default function Home() {
       {/* ABOUT SECTION */}
       <section id="about" className="py-16 md:py-24 border-t border-border/30 bg-secondary/5">
         <div className="container max-w-6xl mx-auto px-4">
-          <SectionHeading title="System Overview" subtitle="Profile Summary" />
+          <SectionHeading title="About Me" subtitle="Who I Am" />
 
           <div className="grid md:grid-cols-3 gap-12">
             <div className="md:col-span-2">
@@ -261,9 +261,9 @@ export default function Home() {
             <div className="relative">
               <div className="absolute -inset-4 border-2 border-primary/20 opacity-50" />
               <div className="bg-background p-6 border border-border h-full flex flex-col justify-center">
-                <div className="font-mono text-sm text-primary mb-4"> // CORE OBJECTIVES</div>
+                <div className="font-mono text-sm text-primary mb-4">// What I Value</div>
                 <ul className="space-y-4">
-                  {["Clean Execution", "Problem Solving", "Continuous Learning", "Team Objectives"].map((item, i) => (
+                  {["Clean Code", "Problem Solving", "Continuous Learning", "Team Collaboration"].map((item, i) => (
                     <li key={i} className="flex items-center gap-3">
                       <div className="w-1.5 h-1.5 bg-primary" />
                       <span className="text-sm font-mono font-medium">{item}</span>
@@ -279,7 +279,7 @@ export default function Home() {
       {/* SKILLS SECTION */}
       <section id="skills" className="py-16 md:py-24 bg-background">
         <div className="container max-w-6xl mx-auto px-4">
-          <SectionHeading title="Capabilities" subtitle="Technical Proficiency" align="right" />
+          <SectionHeading title="Skills" subtitle="Technical Expertise" align="right" />
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {skills?.map((skill, index) => (
@@ -297,7 +297,7 @@ export default function Home() {
       {/* EDUCATION SECTION */}
       <section className="py-16 md:py-24 border-y border-border/30 bg-secondary/5">
         <div className="container max-w-4xl mx-auto px-4">
-          <SectionHeading title="Data Logs" subtitle="Education History" align="center" />
+          <SectionHeading title="Education" subtitle="Academic Background" align="center" />
 
           <div className="space-y-8 mt-16">
             {education?.map((edu, index) => (
@@ -310,7 +310,7 @@ export default function Home() {
       {/* PROJECTS SECTION */}
       <section id="projects" className="py-16 md:py-24 bg-background">
         <div className="container max-w-6xl mx-auto px-4">
-          <SectionHeading title="Executables" subtitle="Selected Projects" />
+          <SectionHeading title="Projects" subtitle="Featured Work" />
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects?.map((project, index) => (
@@ -323,16 +323,16 @@ export default function Home() {
       {/* CONTACT SECTION */}
       <section id="contact" className="py-16 md:py-24 bg-secondary/10 border-t border-border">
         <div className="container max-w-4xl mx-auto px-4">
-          <SectionHeading title="Transmission" subtitle="Initiate Contact" align="center" />
+          <SectionHeading title="Contact" subtitle="Get In Touch" align="center" />
 
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 mt-8 md:mt-12 bg-card border border-border p-5 sm:p-10 md:p-12 relative overflow-hidden">
             {/* Decorative Background grid */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
 
             <div className="relative z-10">
-              <h3 className="text-2xl font-bold mb-6 text-white">Direct Line</h3>
+              <h3 className="text-2xl font-bold mb-6 text-white">Contact Information</h3>
               <p className="text-muted-foreground mb-8">
-                Available for development opportunities and technical consultation. Awaiting input.
+                I'm available for development opportunities and technical consultation. Feel free to reach out!
               </p>
 
               <div className="space-y-4 md:space-y-6">
@@ -361,7 +361,7 @@ export default function Home() {
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="text-[10px] md:text-xs font-mono text-muted-foreground uppercase">Base</div>
+                    <div className="text-[10px] md:text-xs font-mono text-muted-foreground uppercase">Location</div>
                     <div className="font-mono text-sm md:text-base text-white">{profile.location}</div>
                   </div>
                 </div>
@@ -372,7 +372,7 @@ export default function Home() {
               <div>
                 <input
                   {...form.register("name")}
-                  placeholder="IDENTIFIER / NAME"
+                  placeholder="Your Name"
                   className="w-full bg-background/50 border border-border px-4 py-3 md:py-4 text-white placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                 />
                 {form.formState.errors.name && (
@@ -383,7 +383,7 @@ export default function Home() {
               <div>
                 <input
                   {...form.register("email")}
-                  placeholder="RETURN ADDRESS / EMAIL"
+                  placeholder="Your Email"
                   className="w-full bg-background/50 border border-border px-4 py-3 md:py-4 text-white placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                 />
                 {form.formState.errors.email && (
@@ -394,7 +394,7 @@ export default function Home() {
               <div>
                 <textarea
                   {...form.register("message")}
-                  placeholder="DATA PAYLOAD / MESSAGE"
+                  placeholder="Your Message"
                   rows={4}
                   className="w-full bg-background/50 border border-border px-4 py-3 md:py-4 text-white placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary transition-colors font-mono text-sm resize-none"
                 />
@@ -413,7 +413,7 @@ export default function Home() {
                 ) : (
                   <>
                     <Send className="w-4 h-4" />
-                    Transmit Data
+                    Send Message
                   </>
                 )}
               </button>
@@ -426,8 +426,7 @@ export default function Home() {
       < footer className="py-8 border-t border-border bg-background text-center" >
         <div className="container mx-auto px-4">
           <div className="font-mono text-xs text-muted-foreground">
-            SYSTEM STATUS: OPERATIONAL<br />
-            © {new Date().getFullYear()} HARIKRISHNAN. ALL RIGHTS RESERVED.
+            © {new Date().getFullYear()} Harikrishnan. All Rights Reserved.
           </div>
         </div>
       </footer >
