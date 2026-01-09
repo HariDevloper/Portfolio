@@ -53,14 +53,6 @@ const portfolioData = {
     ],
     projects: [
         {
-            id: 3,
-            title: "FLOPS Landing Page",
-            description: "A professional landing page for FLOPS project with modern UI and smooth animations.",
-            techStack: "React, Tailwind CSS, Framer Motion",
-            githubLink: "https://github.com/HariDevloper/FLOPS-landingpage",
-            link: "https://flops-technologies.vercel.app/"
-        },
-        {
             id: 1,
             title: "DrawToGather",
             description: "A collaborative real-time drawing application for teams and friends.",
@@ -75,6 +67,14 @@ const portfolioData = {
             techStack: "React, Flask, BeautifulSoup4, TextBlob, TF-IDF, scikit-learn",
             githubLink: "https://github.com/HariDevloper/SEO-Dashboard-AI",
             link: "https://seo-dashboard-ai.vercel.app/"
+        },
+        {
+            id: 3,
+            title: "FLOPS Landing Page",
+            description: "A professional landing page for FLOPS project with modern UI and smooth animations.",
+            techStack: "React, Tailwind CSS, Framer Motion",
+            githubLink: "https://github.com/HariDevloper/FLOPS-landingpage",
+            link: "https://flops-technologies.vercel.app/"
         }
     ]
 };
