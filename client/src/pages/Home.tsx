@@ -8,7 +8,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { SkillCard } from "@/components/SkillCard";
 import { ProjectCard } from "@/components/ProjectCard";
 import { EducationItem } from "@/components/EducationItem";
-import { Loader2, Mail, Github, Linkedin, Terminal, Send, ChevronDown, MapPin, Phone, ArrowUp, Menu } from "lucide-react";
+import { Loader2, Mail, Github, Linkedin, Terminal, Send, ChevronDown, MapPin, Phone, ArrowUp, Menu, Download } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { HeroGraphic } from "@/components/HeroGraphic";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader, SheetClose } from "@/components/ui/sheet";
@@ -190,11 +190,12 @@ export default function Home() {
 
             <div className="flex flex-wrap gap-4">
               <a
-                href="#contact"
-                className="px-8 py-3 bg-primary text-background font-bold uppercase tracking-wider hover:bg-white transition-colors duration-300 flex items-center gap-2"
+                href="/RESUME.pdf"
+                download="Harikrishnan_Resume.pdf"
+                className="px-8 py-3 bg-primary text-background font-bold hover:bg-white hover:text-black transition-colors duration-300 uppercase tracking-wider font-mono text-sm flex items-center justify-center gap-2"
               >
-                <Terminal className="w-4 h-4" />
-                Get In Touch
+                <Download className="w-4 h-4" />
+                Download Resume
               </a>
               <a
                 href="#projects"
